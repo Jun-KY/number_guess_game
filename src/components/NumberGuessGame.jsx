@@ -8,6 +8,7 @@ const NumberGuessGame = () => {
   const [message, setMessage] = useState("");
   const [isWin, setIsWin] = useState(false);
   const [history, setHistory] = useState([]);
+  const [count, setCount] =useState(0);
 
   const handleSubmit = () => {
     console.log("타겟:", target);
@@ -24,10 +25,13 @@ const NumberGuessGame = () => {
       setIsWin(true);
     } else if (num < target) {
       setMessage("⬆️ 더 큰 수를 입력하세요.");
+          setCount(count + 1)
+
     } else {
       setMessage("⬇️ 더 작은 수를 입력하세요.");
-    }
+          setCount(count + 1)
 
+    }
     setGuess("");
   };
 
@@ -36,6 +40,7 @@ const NumberGuessGame = () => {
     setMessage("");
     setIsWin(false);
     setHistory([]);
+    setCount(0);
   };
 
   return (
@@ -61,7 +66,7 @@ const NumberGuessGame = () => {
       <p className="text-lg font-medium">{message}</p>
 
       <div className="w-full">
-        <h2 className="font-semibold mb-2">입력 기록</h2>
+        <h2 className="font-semibold mb-2">입력 기록 {count} 회</h2>
         <ul className="list-disc list-inside text-sm text-gray-800">
           {history.map((num, index) => (
             <li key={index}>{num}</li>
