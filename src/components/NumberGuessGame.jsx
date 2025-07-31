@@ -8,7 +8,10 @@ const NumberGuessGame = () => {
   const [message, setMessage] = useState("");
   const [isWin, setIsWin] = useState(false);
   const [history, setHistory] = useState([]);
-  const [count, setCount] =useState(0);
+  const [count, setCount] = useState(0);
+  const [gamePlay, setGamePlay] = useState(1);
+  const [gameCount, setGameCount] = useState(0);
+  const [gameResults, setGameResults] = useState([]);
 
   const handleSubmit = () => {
     console.log("타겟:", target);
@@ -23,14 +26,13 @@ const NumberGuessGame = () => {
     if (num === target) {
       setMessage(`🎉 정답! ${target}입니다.`);
       setIsWin(true);
+      setGameResults([...gameResults, count + 1]);
     } else if (num < target) {
       setMessage("⬆️ 더 큰 수를 입력하세요.");
-          setCount(count + 1)
-
+      setCount(count + 1);
     } else {
       setMessage("⬇️ 더 작은 수를 입력하세요.");
-          setCount(count + 1)
-
+      setCount(count + 1);
     }
     setGuess("");
   };
@@ -41,6 +43,7 @@ const NumberGuessGame = () => {
     setIsWin(false);
     setHistory([]);
     setCount(0);
+    setGamePlay(gamePlay + 1);
   };
 
   return (
@@ -70,6 +73,16 @@ const NumberGuessGame = () => {
         <ul className="list-disc list-inside text-sm text-gray-800">
           {history.map((num, index) => (
             <li key={index}>{num}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-4 w-full">
+        <h2 className="font-semibold mb-2">게임 기록</h2>
+        <ul className="list-disc list-inside text-sm text-gray-800">
+          {gameResults.map((tries, index) => (
+            <li key={index}>
+              {index + 1}회차: {tries}회
+            </li>
           ))}
         </ul>
       </div>
